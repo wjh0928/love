@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>给宝贝张慧的小惊喜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            overflow: hidden;
+            position: absolute;
+            background: url(./images/bg.jpeg) no-repeat center;
+            background-size: contain;
+        }
+
+        .time p {
+            margin-left: 10px;
+            font-size: 20px;
+            color: pink;
+        }
+
+        .time .van-count-down {
+            margin: 20px 0 0 40px;
+        }
+
+        .time .block {
+            font-size: 24px;
+            color: rgb(255, 23, 93);
+        }
+
+        .time .colon {
+            font-size: 18px;
+            color: rgb(255, 0, 55);
+        }
+
+        .my-swipe .van-swipe-item {
+            width: 100%;
+            height: 200px;
+            margin-top: 20px;
+            color: #fff;
+            font-size: 20px;
+            line-height: 150px;
+            text-align: center;
+            background-color: #39a9ed;
+        }
+
+        .our {
+            margin-top: 10px;
+            padding-right: 20px;
+            text-align: right;
+            font-size: 18px;
+            color: #f03141;
+        }
+    </style>
+    <!-- 引入样式文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.10/lib/index.css" />
+    <link rel="stylesheet" href="./css/flower.css">
+</head>
+
+<body>
+    <div id="app">
+        <div id="snowflake"></div>
+        <!-- 小喇叭 -->
+        <div>
+            <van-notice-bar left-icon="volume-o" text="号外号外！王家辉 && 张慧 在一起 一年啦！！" />
+        </div>
+        <!-- 倒计时 -->
+        <div class="time">
+            <p>我们一起跨过分秒：</p>
+            <van-count-down ref="timeRef" :time="time" format="DD 天 HH 时 mm 分 ss 秒" @finish="finish">
+                <template #default="timeData">
+                    <span class="block">{{ timeData.days }}</span>
+                    <span class="colon">天</span>
+                    <span class="block">{{ timeData.hours }}</span>
+                    <span class="colon">时</span>
+                    <span class="block">{{ timeData.minutes }}</span>
+                    <span class="colon">分</span>
+                    <span class="block">{{ timeData.seconds }}</span>
+                    <span class="colon">秒</span>
+                </template>
+            </van-count-down>
+        </div>
+        <!-- 轮播 -->
+        <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+            <van-swipe-item>
+                <img src="./images/baby/1.jpg" width="100%" height="100%" alt="">
+            </van-swipe-item>
+            <van-swipe-item>
+                <img src="./images/baby/2.jpg" width="100%" height="100%" alt="">
+            </van-swipe-item>
+            <van-swipe-item>
+                <img src="./images/baby/3.jpg" width="100%" height="100%" alt="">
+            </van-swipe-item>
+        </van-swipe>
+        <p class="our">我的宝贝真漂亮 ↑</p>
+        <!-- 底部 -->
+        <van-tabbar v-model="active" active-color="#ee0a24" @change="onChange">
+            <van-tabbar-item icon="like-o">爸</van-tabbar-item>
+            <van-tabbar-item icon="like-o">爸</van-tabbar-item>
+            <van-tabbar-item icon="like-o">爱</van-tabbar-item>
+            <van-tabbar-item icon="like-o">你</van-tabbar-item>
+        </van-tabbar>
+        <van-popup v-model="show0" position="bottom" round
+            :style="{ height: '30%',textAlign:'center',lineHeight:'200px',color:'#ff9900'}">
+            <p>偷偷告诉你，屏幕上的花瓣每520ms就会出现一个。</p>
+        </van-popup>
+        <van-popup v-model="show1" position="bottom" round
+            :style="{ height: '30%',textAlign:'center',lineHeight:'200px',color: '#14ac00'}">
+            <p>特别的爱给特别的张慧宝贝！</p>
+        </van-popup>
+        <van-popup v-model="show2" position="bottom" round
+            :style="{ height: '30%',textAlign:'center',lineHeight:'20px',color: '#0083ee'}">
+            <div style="margin-top: 80px;">
+                <p>给宝贝一个5 ♥ 好评</p>
+                <p>希望你不要骄傲，再接再厉，继续努力！</p><br>
+                <van-rate v-model="value" icon="like" void-icon="like-o" readonly />
+            </div>
+        </van-popup>
+        <van-popup v-model="show3" position="bottom" round
+            :style="{ height: '30%',textAlign:'center',color: '#c00050'}">
+            <div style="margin-top: 40px;">
+                <img src="./images/love.jpg" alt="">
+                <p style="font-size: 24px;">呱 !</p>
+            </div>
+        </van-popup>
+    </div>
+
+    <!-- 引入 jq 和 花瓣特效 的js文件 -->
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/jquery.transit.js"></script>
+    <script src="./js/flower.js"></script>
+    <!-- 引入 Vue 和 Vant 的 JS 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.10/lib/vant.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                active: -1,
+                show0: false,
+                show1: false,
+                show2: false,
+                show3: false,
+                value: 5
+            },
+            methods: {
+                finish() {
+                    this.$refs.timeRef.pause();
+                },
+                onChange(index) {
+                    if (index == 0) {
+                        this.show0 = !this.show0;
+                    } else if (index == 1) {
+                        this.show1 = !this.show1;
+                    } else if (index == 2) {
+                        this.show2 = !this.show2;
+                    } else {
+                        this.show3 = !this.show3;
+                    }
+
+                }
+            },
+            computed: {
+                time() {
+                    let nowTimeDate = new Date('Mon Dec 14 2020 00:00:00 GMT+0800 (中国标准时间)');
+                    var realATime = nowTimeDate.getTime() - new Date().getTime();
+                    return realATime;
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>
